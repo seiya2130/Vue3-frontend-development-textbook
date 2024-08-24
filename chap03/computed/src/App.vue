@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import {ref, computed} from "vue"
+import {reactive, computed} from "vue"
 
-const radiusInit = Math.round(Math.random() * 10);
+const data = reactive({
+  PI: 3.14,
+  radius: Math.round(Math.random() * 10)
+})
 
-const PI = ref(3.14);
-
-const radius = ref(radiusInit);
 
 const area = computed(
   (): number => {
-    return radius.value * radius.value * PI.value;
+    return data.radius * data.radius * data.PI;
   }
 )
 
 setInterval(
   ():void =>{
-    radius.value = Math.round(Math.random() * 10);
+    data.radius = Math.round(Math.random() * 10);
   },1000
 )
 </script>
 
 <template>
-  <p>半径{{ radius }}、円周率{{ PI }}で計算すると、{{ area }}
+  <p>半径{{ data.radius }}、円周率{{ data.PI }}で計算すると、{{ area }}
   </p>
 </template>
