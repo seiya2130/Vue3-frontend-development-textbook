@@ -1,62 +1,76 @@
 <script setup lang="ts">
 import {ref, computed} from "vue";
 
-
 const msg = ref("こんにちは世界")
 
-const msgTextRed = ref("red");
-const msgTextColor = ref("white");
-const msgBgColor = ref("black");
+const isTextColorRed = ref(true);
+const isBgColorBlue = ref(false);
+const styles = ref({
+  isTextColorRed: false,
+  bgColorBlue: true
+})
 
-const msgStyles = ref({
-  color: "white",
-  backgroudColor: "black"
-});
+const computedStyles = computed(
+  (): { textColorRed: boolean; bgColorBlue: boolean; } => {
+    const randText = Math.round(Math.random());
+    let textColorFlg = true;
+    if(randText == 0) {
+      textColorFlg = false;
+    }
 
-const msgStyles2 = ref({
-  fontSize: "24pt"
-});
+    const randBg = Math.round(Math.random());
+    let bgColorFlg = true;
+    if(randBg == 0){
+      bgColorFlg = false;
+    }
 
-const msgStyles3 = ref({
-  color: "pink",
-  fontSize: "24pt"
-});
-
-const textSize = computed(
-  (): string => {
-    const size = Math.round(Math.random() * 25 ) + 10;
-    return `${size}`
+    return {
+      textColorRed: textColorFlg,
+      bgColorBlue: bgColorFlg
+    }
   }
 )
 
 </script>
 
 <template>
-  <p v-bind:style="{color: msgTextRed}">
+  <p v-bind:class="{textColorRed: true, bgColorBlue: true}">
+    {{ msg }}  
+  </p>
+  <p v-bind:class="{textColorRed: isTextColorRed, bgColorBlue: isBgColorBlue}">
+    {{ msg }}  
+  </p>
+  <p v-bind:class="{textColorPink: true}">
+    {{ msg }}  
+  </p>
+  <p v-bind:class="{ 'text-color-pink': true }">
     {{ msg }}
   </p>
-  <p v-bind:style="{color: 'pink'}">
+  <p class="textSize24" v-bind:class="{ textColorRed: isTextColorRed, isBgColorBlue: isBgColorBlue}">
     {{ msg }}
   </p>
-  <p v-bind:style="{fontSize: textSize}">
+  <p class="textSize24" v-bind:class="styles">
     {{ msg }}
   </p>
-  <p v-bind:style="{color: msgTextColor, backgroundColor: msgBgColor}">
-    {{ msg }}
-  </p>
-  <p v-bind:style="{color: msgTextColor, backgroundColor: msgBgColor}">
-    {{ msg }}
-  </p>
-  <p v-bind:style="msgStyles">
-    {{ msg }}
-  </p>
-  <p v-bind:style="[msgStyles,msgStyles2]">
-    {{ msg }}
-  </p>
-  <p v-bind:style="[msgStyles,msgStyles3]">
-    {{ msg }}
-  </p>
-  <p v-bind:style="[msgStyles3,msgStyles]">
+  <p v-bind:class="computedStyles">
     {{ msg }}
   </p>
 </template>
+
+<style>
+.textColorRed {
+  color: pink;
+}
+
+.text-color-pink {
+  color: pink;
+}
+
+.bgColorBlue {
+  background-color: blue;
+}
+
+.textSize24 {
+  font-size: 24px;
+}
+</style>
