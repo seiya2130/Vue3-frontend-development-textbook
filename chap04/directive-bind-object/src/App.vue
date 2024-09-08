@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-const randValue = ref("まだです");
+const mousePointX = ref(0)
+const mousePointY = ref(0)
 
-const onButtonClick = (): void => {
-  const rand = Math.round(Math.random() * 10);
-  randValue.value = String(rand);
+const onImgMousemove = (event: MouseEvent): void => {
+  mousePointX.value = event.offsetX;
+  mousePointY.value = event.offsetY;
 }
 </script>
 
 <template>
   <section>
-    <button v-on:click="onButtonClick">クリック</button>
-    <p>クリックの結果: {{ randValue }}</p>
+    <img src="./assets/logo.svg" alt="ロゴ" width="200" v-on:mousemove="onImgMousemove">
+    <p>ポインタの位置 x={{ mousePointX }}; y={{ mousePointY }}</p>
   </section>
 </template>
